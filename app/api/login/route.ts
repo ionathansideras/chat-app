@@ -13,6 +13,13 @@ export async function POST(req: Request) {
     // Connect to the 'users' collection in the database
     const collection = await connectToDatabase("users");
 
+    if (!collection) {
+        return NextResponse.json({
+            status: 500,
+            message: "Failed to connect to the database serve",
+        });
+    }
+
     // Find a user document in the collection that matches the provided email
     const filteredDocs = await collection.find({ email: email }).toArray();
 

@@ -16,6 +16,13 @@ export async function POST(req: Request) {
     // Connecting to the database
     const collection = await connectToDatabase("users");
 
+    if (!collection) {
+        return NextResponse.json({
+            status: 500,
+            message: "Failed to connect to the database serve",
+        });
+    }
+
     const filteredDocs = await collection.find({ email: email }).toArray();
 
     if (filteredDocs.length > 0) {
