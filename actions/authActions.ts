@@ -50,17 +50,20 @@ export async function signUp(formData: FormData) {
     }
 
     // If there are no validation errors, make a POST request to the signup API
-    const response = await fetch("http://localhost:3000//api/signup", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            username: name,
-            email: email,
-            password: password,
-        }),
-    });
+    const response = await fetch(
+        "https://chat-app-five-bice.vercel.app/api/signup",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username: name,
+                email: email,
+                password: password,
+            }),
+        }
+    );
 }
 
 // This function is used to log in an existing user.
@@ -70,16 +73,19 @@ export async function logIn(formData: FormData) {
     const password = formData.get("password");
 
     // Make a POST request to the login API with the user's email and password
-    const response = await fetch("http://localhost:3000//api/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            email: email,
-            password: password,
-        }),
-    });
+    const response = await fetch(
+        "https://chat-app-five-bice.vercel.app/api/login",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password,
+            }),
+        }
+    );
 
     // Parse the response to JSON
     const data = await response.json();
