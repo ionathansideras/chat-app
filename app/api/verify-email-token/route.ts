@@ -38,11 +38,11 @@ export async function POST(req: Request) {
     }
 
     // If the token matches the user's token, verify the user's email
-    if (filteredDocs[0].userToken === token) {
+    if (filteredDocs[0].emailToken === token) {
         // Update the user's verified status to true in the database
         await collection.updateOne(
             { email: email },
-            { $set: { verified: true } }
+            { $set: { verified: true }, $unset: { emailToken: "" } }
         );
 
         // Return a 200 status code and a success message

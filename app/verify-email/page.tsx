@@ -1,3 +1,4 @@
+"use client";
 // Importing necessary modules and functions
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";

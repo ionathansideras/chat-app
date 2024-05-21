@@ -40,7 +40,7 @@ export async function POST(req: Request) {
         });
     }
 
-    const userToken = uuidv4();
+    const emailToken = uuidv4();
 
     // If a user with the provided email doesn't exist, insert a new user into the collection
     await collection.insertOne({
@@ -48,13 +48,13 @@ export async function POST(req: Request) {
         email: email,
         password: hashedPassword,
         verified: false,
-        userToken: userToken,
+        emailToken: emailToken,
     });
 
     // Create the verification HTML using the imported createVerificationHTML function
     const html = createVerificationHTML(
         username,
-        `${API_URL}/verify-email?email=${email}&token=${userToken}`
+        `${API_URL}/verify-email?email=${email}&token=${emailToken}`
     );
 
     // Send the verification email using the imported sendEmail function
