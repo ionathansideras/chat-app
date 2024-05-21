@@ -68,7 +68,7 @@ export async function POST(req: Request) {
 
     try {
         // Send the verification email using the imported sendEmail function
-        sendEmail(email, "Verify your email", html);
+        await sendEmail(email, "Verify your email", html);
     } catch (error) {
         console.error(error);
         return NextResponse.json({
