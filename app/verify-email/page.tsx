@@ -1,11 +1,19 @@
 "use client";
 // Importing necessary modules and functions
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { API_URL } from "@/constants";
 
-// This is the main component for the Verify Email page
 export default function VerifyEmailPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <VerifyEmail />
+        </Suspense>
+    );
+}
+
+// This is the main component for the Verify Email page
+function VerifyEmail() {
     // Using the useSearchParams hook to get the URL parameters
     const searchParams = useSearchParams();
     // Extracting the 'email' and 'token' parameters from the URL
