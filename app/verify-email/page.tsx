@@ -4,9 +4,14 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { API_URL } from "@/constants";
 
+// This is the main component for the Verify Email page
 export default function VerifyEmailPage() {
+    // The component is wrapped in a Suspense component from React
+    // Suspense allows you to "wait" for some code to load and declaratively specify a loading state (like a loading spinner)
+    // In this case, while the VerifyEmail component is loading, the fallback will be rendered, which is a div with the text "Loading..."
     return (
         <Suspense fallback={<div>Loading...</div>}>
+            {/* The VerifyEmail component. This is the component that will be lazily loaded. */}
             <VerifyEmail />
         </Suspense>
     );
