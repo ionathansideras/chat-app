@@ -25,6 +25,6 @@ export async function sendEmail(to: string, subject: string, html: string) {
             html, // HTML body
         });
     } catch (error) {
-        console.error(error);
+        return error;
     }
 }
