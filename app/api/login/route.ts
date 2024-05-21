@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { verifyPassword } from "@/helpers/hash";
 import { connectToDatabase } from "@/helpers/connectToDatabase";
+const { v4: uuidv4 } = require("uuid");
 
 // This function handles POST requests for user login
 export async function POST(req: Request) {
@@ -47,6 +48,18 @@ export async function POST(req: Request) {
         });
     }
 
+    const newSessionToken = uuidv4();
+
+    await collection.updateOne(
+        { email: email },
+        { $set: { sessionToken: newSessionToken } }
+    );
+
     // If all checks pass, return a 200 status with a "Success" message
-    return NextResponse.json({ status: 200, message: "Success" });
+    return NextResponse.json({
+        status: 200,
+        message: {
+            sessionToken: newSessionToken,
+        },
+    });
 }

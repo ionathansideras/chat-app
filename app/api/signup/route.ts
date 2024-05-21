@@ -51,6 +51,7 @@ export async function POST(req: Request) {
             verified: false,
             emailToken: emailToken,
             timestamp: new Date(),
+            sessionToken: "",
         });
     } catch (error) {
         // If an error occurs during the insertion, return a 500 status code

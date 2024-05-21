@@ -1,5 +1,6 @@
 "use server";
 import { API_URL } from "@/constants";
+import { cookies } from "next/headers";
 
 // This function is used to sign up a new user.
 export async function signUp(formData: FormData) {
@@ -84,6 +85,13 @@ export async function logIn(formData: FormData) {
 
     // Parse the response to JSON
     const data = await response.json();
+
+    const oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
+    const thirtyDays = oneDay * 30; // milliseconds in 30 days
+    // create a cookie with the session token that expires in 30 days
+    cookies().set("sessionToken", data.message.sessionToken, {
+        expires: Date.now() + thirtyDays,
+    });
 
     // If the status is 200, the user logged in successfully
     if (data.status === 200) {
