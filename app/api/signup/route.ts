@@ -49,6 +49,7 @@ export async function POST(req: Request) {
         password: hashedPassword,
         verified: false,
         emailToken: emailToken,
+        timestamp: new Date(),
     });
 
     // Create the verification HTML using the imported createVerificationHTML function
