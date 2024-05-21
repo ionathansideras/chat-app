@@ -51,7 +51,7 @@ export async function signUp(formData: FormData) {
     }
 
     // If there are no validation errors, make a POST request to the signup API
-    const response = await fetch(API_URL + "/signup", {
+    const response = await fetch(API_URL + "/api/signup", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export async function logIn(formData: FormData) {
     const password = formData.get("password");
 
     // Make a POST request to the login API with the user's email and password
-    const response = await fetch(API_URL + "/login", {
+    const response = await fetch(API_URL + "/api/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
