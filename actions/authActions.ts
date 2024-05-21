@@ -1,9 +1,18 @@
 "use server";
 import { API_URL } from "@/constants";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+// Define FormState based on expected properties
+type FormState = {
+    message?: string;
+    [key: string]: any; // Additional dynamic keys if necessary
+};
 
 // This function is used to sign up a new user.
-export async function signUp(formData: FormData) {
+export async function signUp(
+    prevFormState: FormState,
+    formData: FormData
+): Promise<FormState> {
     // Extracting form data
     const name = formData.get("username");
     let email = formData.get("email");
@@ -47,8 +56,7 @@ export async function signUp(formData: FormData) {
 
     // If there are any validation errors, log them and stop execution
     if (Object.keys(error).length > 0) {
-        console.error(error);
-        return;
+        return error;
     }
 
     // If there are no validation errors, make a POST request to the signup API
@@ -63,10 +71,24 @@ export async function signUp(formData: FormData) {
             password: password,
         }),
     });
+
+    // Parse the response to JSON
+    const data = await response.json();
+
+    // If the status is 200, the user signed up successfully
+    if (data.status !== 200) {
+        // If the status is not 200, there was an error. Show the error message.
+        return { message: data.message };
+    } else {
+        redirect("/login");
+    }
 }
 
 // This function is used to log in an existing user.
-export async function logIn(formData: FormData) {
+export async function logIn(
+    prevFormState: FormState,
+    formData: FormData
+): Promise<FormState> {
     // Extracting form data
     const email = formData.get("email");
     const password = formData.get("password");
@@ -94,10 +116,9 @@ export async function logIn(formData: FormData) {
     });
 
     // If the status is 200, the user logged in successfully
-    if (data.status === 200) {
-        console.log("User logged in successfully");
+    if (data.status !== 200) {
+        return { message: data.message };
     } else {
-        // If the status is not 200, there was an error. Show the error message.
-        console.log(data.message);
+        redirect("/messages");
     }
 }
