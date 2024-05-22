@@ -1,9 +1,7 @@
-// Define an interface for the form data
-type FormData = {
-    message: string;
-    username: string;
-    email: string;
-    password: string;
+// Define FormState based on expected properties
+type FormState = {
+    message?: string;
+    [key: string]: any; // Additional dynamic keys if necessary
 };
 
-export type { FormData };
+export type { FormState };

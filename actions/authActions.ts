@@ -2,11 +2,7 @@
 import { API_URL } from "@/constants";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-// Define FormState based on expected properties
-type FormState = {
-    message?: string;
-    [key: string]: any; // Additional dynamic keys if necessary
-};
+import { FormState } from "@/types/authTypes";
 
 // This function is used to sign up a new user.
 export async function signUp(
