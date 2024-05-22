@@ -9,6 +9,13 @@ export async function POST(req: Request) {
     // Extract email and password from the request data
     const { sessionToken } = data;
 
+    if (!sessionToken) {
+        return NextResponse.json({
+            status: 400,
+            message: "Session token is required",
+        });
+    }
+
     // Connect to the 'users' collection in the database
     const collection = await connectToDatabase("users");
 
