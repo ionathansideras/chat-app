@@ -10,7 +10,7 @@ export async function isUserLoggedIn() {
     // Get the session token from the cookie store
     const sessionToken = cookieStore.get("sessionToken");
 
-    if (!sessionToken) {
+    if (!sessionToken || !sessionToken.value) {
         return false;
     }
 
