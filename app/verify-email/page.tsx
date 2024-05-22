@@ -58,7 +58,7 @@ function VerifyEmail() {
 
         // Calling the verifyEmail function
         verifyEmail();
-    }, []); // The empty array means this useEffect will only run once, when the component mounts
+    }, [email, token]); // The empty array means this useEffect will only run once, when the component mounts
 
     // Rendering the component
     return (

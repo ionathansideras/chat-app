@@ -3,7 +3,6 @@ import { API_URL } from "@/constants";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { FormState } from "@/types/authTypes";
-import exp from "constants";
 
 // This function is used to sign up a new user.
 export async function signUp(
@@ -16,15 +15,17 @@ export async function signUp(
     let password = formData.get("password");
     const confirmPassword = formData.get("confirmPassword");
 
-    // Converting email and password to string if they are not already
+    // Converting email to string if it is not already
     if (typeof email !== "string") {
         email = String(email);
     }
 
+    // make the password a string if it is not already
     if (typeof password !== "string") {
         password = String(password);
     }
 
+    // Defining an error object
     let error = {};
 
     // Check if fields are not empty
@@ -57,7 +58,7 @@ export async function signUp(
     }
 
     // If there are no validation errors, make a POST request to the signup API
-    const response = await fetch(API_URL + "/api/signup", {
+    const response = await fetch(API_URL + "/auth/api/signup", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -96,7 +97,7 @@ export async function logIn(
     }
 
     // Make a POST request to the login API with the user's email and password
-    const response = await fetch(API_URL + "/api/login", {
+    const response = await fetch(API_URL + "/auth/api/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -110,8 +111,10 @@ export async function logIn(
     // Parse the response to JSON
     const data = await response.json();
 
+    // calc the milliseconds in a day and 30 days
     const oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
     const thirtyDays = oneDay * 30; // milliseconds in 30 days
+
     // create a cookie with the session token that expires in 30 days
     cookies().set("sessionToken", data.message.sessionToken, {
         expires: Date.now() + thirtyDays,
@@ -129,20 +132,25 @@ export async function logIn(
 export async function logOut() {
     // Remove the session token cookie
     cookies().delete("sessionToken");
+    // Redirect the user to the login page
     redirect("/login");
 }
 
+// This function is used to send a password reset email to a user.
 export async function forgotPassword(
     prevFormState: FormState,
     formData: FormData
 ): Promise<FormState> {
+    // Extracting form data
     const email = formData.get("email");
 
+    // Check if email is not empty
     if (!email) {
         return { message: "Email is required" };
     }
 
-    const response = await fetch(API_URL + "/api/forgot-password-api", {
+    // Make a POST request to the forgot password API with the user's email
+    const response = await fetch(API_URL + "/auth/api/forgot-password-api", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -152,8 +160,10 @@ export async function forgotPassword(
         }),
     });
 
+    // Parse the response to JSON
     const data = await response.json();
 
+    // return the message from the response
     return { message: data.message };
 }
 
@@ -164,15 +174,18 @@ export async function createNewPassword(
     prevFormState: FormState,
     formData: FormData
 ): Promise<FormState> {
+    // Extracting form data
     let password = formData.get("password");
     const confirmPassword = formData.get("confirmPassword");
 
+    // Check if fields are not empty
     if (!password || !confirmPassword) {
         return { message: "All fields are required" };
     }
 
+    // Check if email and token are not empty
     if (!email || !token) {
-        return { message: "something went wrong please try again" };
+        return { message: "Something went wrong please try again" };
     }
 
     // make the password a string if it is not already
@@ -180,6 +193,7 @@ export async function createNewPassword(
         password = String(password);
     }
 
+    // Check if password is at least 8 characters long, contains at least one uppercase letter, one lowercase letter, one number, and one special character
     if (
         !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
             password
@@ -191,11 +205,13 @@ export async function createNewPassword(
         };
     }
 
+    // Check if password and confirmPassword are the same
     if (password !== confirmPassword) {
         return { message: "Passwords do not match" };
     }
 
-    const response = await fetch(API_URL + "/api/create-new-password", {
+    // Make a POST request to the create new password API with the user's email, token, and new password
+    const response = await fetch(API_URL + "/auth/api/create-new-password", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -207,6 +223,7 @@ export async function createNewPassword(
         }),
     });
 
+    // Parse the response to JSON
     const data = await response.json();
 
     return { message: data.message };

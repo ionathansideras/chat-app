@@ -1,14 +1,15 @@
 import { NextResponse } from "next/server";
-import { connectToDatabase } from "@/helpers/connectToDatabase";
+import { connectToDatabase } from "@/helpers/auth/connectToDatabase";
 
-// This function handles POST requests for user login
+// This function handles POST requests for user validation
 export async function POST(req: Request) {
     // Parse the request body to JSON
     const data = await req.json();
 
-    // Extract email and password from the request data
+    // Extract the session token from the request body
     const { sessionToken } = data;
 
+    // If no session token is provided, return a 400 status with a "Session token is required" message
     if (!sessionToken) {
         return NextResponse.json({
             status: 400,
@@ -19,6 +20,7 @@ export async function POST(req: Request) {
     // Connect to the 'users' collection in the database
     const collection = await connectToDatabase("users");
 
+    // If the connection to the database fails, return a 500 status with a "Failed to connect to the database server" message
     if (!collection) {
         return NextResponse.json({
             status: 500,
@@ -26,7 +28,7 @@ export async function POST(req: Request) {
         });
     }
 
-    // Find a user document in the collection that matches the provided email
+    // Find a user document in the collection that matches the provided session token
     const filteredDocs = await collection
         .find({ sessionToken: sessionToken })
         .toArray();

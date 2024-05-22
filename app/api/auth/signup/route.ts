@@ -1,15 +1,15 @@
 // Importing necessary modules and functions
 import { NextResponse } from "next/server";
-import { hashUserPassword } from "@/helpers/hash";
-import { connectToDatabase } from "@/helpers/connectToDatabase";
-import { sendEmail } from "@/helpers/sendEmail";
-import { createVerificationHTML } from "@/helpers/createVerificationHTML";
+import { hashUserPassword } from "@/helpers/auth/hash";
+import { connectToDatabase } from "@/helpers/auth/connectToDatabase";
+import { sendEmail } from "@/helpers/auth/sendEmail";
+import { createVerificationHTML } from "@/helpers/auth/createVerificationHTML";
 import { API_URL } from "@/constants";
 const { v4: uuidv4 } = require("uuid");
 
-// POST handler function
+// POST handler function for the signup API
 export async function POST(req: Request) {
-    // Parsing the request body to JSON
+    // Parsing the request data to JSON
     const data = await req.json();
 
     // Destructuring the data object to get username, email, and password
@@ -40,6 +40,7 @@ export async function POST(req: Request) {
         });
     }
 
+    // Generating a unique email token using the uuidv4 function
     const emailToken = uuidv4();
 
     try {
@@ -55,6 +56,7 @@ export async function POST(req: Request) {
         });
     } catch (error) {
         // If an error occurs during the insertion, return a 500 status code
+        console.error(error);
         return NextResponse.json({
             status: 500,
             message: "Failed to insert user into the database",
@@ -71,6 +73,7 @@ export async function POST(req: Request) {
         // Send the verification email using the imported sendEmail function
         await sendEmail(email, "Verify your email", html);
     } catch (error) {
+        // If an error occurs during the email sending, return a 500 status code
         console.error(error);
         return NextResponse.json({
             status: 500,

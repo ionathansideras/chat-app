@@ -1,15 +1,14 @@
 // Importing necessary modules and functions
 import { NextResponse } from "next/server";
-import { connectToDatabase } from "@/helpers/connectToDatabase";
-import { hashUserPassword } from "@/helpers/hash";
+import { connectToDatabase } from "@/helpers/auth/connectToDatabase";
 
-// This function handles POST requests for user login
+// This function handles POST requests for user email verification
 export async function POST(req: Request) {
     // Parsing the request body to JSON
     const data = await req.json();
 
     // Destructuring the data object to get email and token
-    const { email, token, password } = data;
+    const { email, token } = data;
 
     // Connecting to the database and getting the 'users' collection
     const collection = await connectToDatabase("users");
@@ -22,7 +21,7 @@ export async function POST(req: Request) {
         });
     }
 
-    // Checking if a user with the provided email exists
+    // Query the database to find a user with the provided email
     const filteredDocs = await collection.find({ email: email }).toArray();
 
     // If a user with the provided email doesn't exist, return a 401 status code
@@ -30,25 +29,24 @@ export async function POST(req: Request) {
         return NextResponse.json({ status: 401, message: "User not found" });
     }
 
-    // If the token matches the user's token, verify the user's email
-    if (filteredDocs[0].passwordToken === token) {
-        // Hash the user's password
-        const hashedPassword = hashUserPassword(password);
+    // If the user's email is already verified, return a 200 status code
+    if (filteredDocs[0].verified) {
+        return NextResponse.json({
+            status: 200,
+            message: "Email already verified",
+        });
+    }
 
+    // If the token matches the user's token, verify the user's email
+    if (filteredDocs[0].emailToken === token) {
         // Update the user's verified status to true in the database
         await collection.updateOne(
             { email: email },
-            {
-                $set: { password: hashedPassword },
-                $unset: { passwordToken: "" },
-            }
+            { $set: { verified: true }, $unset: { emailToken: "" } }
         );
 
         // Return a 200 status code and a success message
-        return NextResponse.json({
-            status: 200,
-            message: "Password has been updated",
-        });
+        return NextResponse.json({ status: 200, message: "Email verified" });
     }
 
     // If the token doesn't match the user's token, return a 401 status code

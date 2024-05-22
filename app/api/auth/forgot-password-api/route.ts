@@ -1,14 +1,14 @@
 // Importing necessary modules and functions
 import { NextResponse } from "next/server";
-import { connectToDatabase } from "@/helpers/connectToDatabase";
-import { sendEmail } from "@/helpers/sendEmail";
-import { createPasswordResetHTML } from "@/helpers/createPasswordHTML";
+import { connectToDatabase } from "@/helpers/auth/connectToDatabase";
+import { sendEmail } from "@/helpers/auth/sendEmail";
+import { createPasswordResetHTML } from "@/helpers/auth/createPasswordHTML";
 import { API_URL } from "@/constants";
 const { v4: uuidv4 } = require("uuid");
 
-// POST handler function
+// POST handler function for the forgot-password API
 export async function POST(req: Request) {
-    // Parsing the request body to JSON
+    // Parsing the request data to JSON
     const data = await req.json();
 
     // Destructuring the data object to get email
@@ -36,6 +36,7 @@ export async function POST(req: Request) {
         });
     }
 
+    // Generating a unique password token using the uuidv4 function
     const passwordToken = uuidv4();
 
     // Create the verification HTML using the imported createVerificationHTML function
@@ -48,6 +49,7 @@ export async function POST(req: Request) {
         // Send the verification email using the imported sendEmail function
         await sendEmail(email, "Reset your password", html);
     } catch (error) {
+        // If an error occurs during the email sending process, return a 500 status code
         console.error(error);
         return NextResponse.json({
             status: 500,
@@ -62,6 +64,7 @@ export async function POST(req: Request) {
             { $set: { passwordToken: passwordToken } }
         );
     } catch (error) {
+        // If an error occurs during the update process, return a 500 status code
         console.error(error);
         return NextResponse.json({
             status: 500,

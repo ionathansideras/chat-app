@@ -1,46 +1,27 @@
-"use client";
-import React from "react";
-import { signUp } from "@/actions/authActions";
-import { useFormState } from "react-dom";
-import Link from "next/link";
-import AuthSubmitButton from "@/components/authSubmitButton";
+// Importing the SignUpForm component
+import SignUpForm from "@/components/auth/signUpForm";
 
+// Metadata for the sign up page
+export const metadata = {
+    // The title of the page
+    title: "Sign Up | ChatHub",
+    // A brief description of the page
+    description:
+        "Create a new account on ChatHub and start chatting with people from all around the world.",
+    // Keywords for SEO
+    keywords: "ChatHub, Sign Up, Chat, Global Communication, Create Account",
+    // The author of the page
+    author: "ChatHub Team",
+};
+
+// The SignUpPage component
 export default function SignUpPage() {
-    // Define the initial state
-    const initialState = { message: "" };
-
-    const [formState, formAction] = useFormState(signUp, initialState);
-
     return (
+        // The main tag is used to wrap the main content of the page
         <main>
             <h1>Sign Up</h1>
             <p>Create a new account</p>
-            <form action={formAction}>
-                <label>
-                    Username
-                    <input type="text" name="username" />
-                </label>
-                <br></br>
-                <label>
-                    Email
-                    <input type="email" name="email" />
-                </label>
-                <br></br>
-                <label>
-                    Password
-                    <input type="password" name="password" />
-                </label>
-                <br></br>
-                <label>
-                    Confirm Password
-                    <input type="password" name="confirmPassword" />
-                </label>
-                <br></br>
-                {formState?.message ? <p>{formState?.message}</p> : null}
-                <br></br>
-                <AuthSubmitButton> Sign Up </AuthSubmitButton>
-                <Link href="/login">go to login</Link>
-            </form>
+            <SignUpForm />
         </main>
     );
 }

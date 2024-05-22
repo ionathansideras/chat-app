@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { isUserLoggedIn } from "@/helpers/isUserLoggedIn";
+import { isUserLoggedIn } from "@/helpers/auth/isUserLoggedIn";
 import { logOut } from "@/actions/authActions";
 import { API_URL } from "@/constants";
 
@@ -12,7 +12,7 @@ export default async function MessagesPage() {
         redirect("/login");
     }
 
-    const response = await fetch(`${API_URL}/api/messages`);
+    const response = await fetch(`${API_URL}/auth/api/messages`);
     const data = await response.json();
 
     const messages = data.message.messages;
