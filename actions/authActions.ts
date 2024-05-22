@@ -89,6 +89,11 @@ export async function logIn(
     const email = formData.get("email");
     const password = formData.get("password");
 
+    // Check if fields are not empty
+    if (!email || !password) {
+        return { message: "All fields are required" };
+    }
+
     // Make a POST request to the login API with the user's email and password
     const response = await fetch(API_URL + "/api/login", {
         method: "POST",
