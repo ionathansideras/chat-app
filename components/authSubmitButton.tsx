@@ -13,9 +13,6 @@ export default function AuthSubmitButton({
     // Use the useFormStatus hook to get the status of the form
     const status = useFormStatus();
 
-    // Log the status to the console
-    console.log(status);
-
     // If the form is pending, return a disabled button with the text "Loading..."
     if (status.pending === true) {
         return <button disabled>Loading...</button>;
