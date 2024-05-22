@@ -30,6 +30,7 @@ export default function LoginPage() {
                 <br></br>
                 <AuthSubmitButton> Log In </AuthSubmitButton>
                 <Link href="/signup">go to sign up</Link>
+                <Link href="/forgot-password">forgot password</Link>
             </form>
         </main>
     );

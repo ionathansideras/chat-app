@@ -3,6 +3,7 @@ import { API_URL } from "@/constants";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { FormState } from "@/types/authTypes";
+import exp from "constants";
 
 // This function is used to sign up a new user.
 export async function signUp(
@@ -129,4 +130,84 @@ export async function logOut() {
     // Remove the session token cookie
     cookies().delete("sessionToken");
     redirect("/login");
+}
+
+export async function forgotPassword(
+    prevFormState: FormState,
+    formData: FormData
+): Promise<FormState> {
+    const email = formData.get("email");
+
+    if (!email) {
+        return { message: "Email is required" };
+    }
+
+    const response = await fetch(API_URL + "/api/forgot-password-api", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email: email,
+        }),
+    });
+
+    const data = await response.json();
+
+    return { message: data.message };
+}
+
+// This function is used to create a new password for a user.
+export async function createNewPassword(
+    email: string,
+    token: string,
+    prevFormState: FormState,
+    formData: FormData
+): Promise<FormState> {
+    let password = formData.get("password");
+    const confirmPassword = formData.get("confirmPassword");
+
+    if (!password || !confirmPassword) {
+        return { message: "All fields are required" };
+    }
+
+    if (!email || !token) {
+        return { message: "something went wrong please try again" };
+    }
+
+    // make the password a string if it is not already
+    if (typeof password !== "string") {
+        password = String(password);
+    }
+
+    if (
+        !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+            password
+        )
+    ) {
+        return {
+            message:
+                "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+        };
+    }
+
+    if (password !== confirmPassword) {
+        return { message: "Passwords do not match" };
+    }
+
+    const response = await fetch(API_URL + "/api/create-new-password", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email: email,
+            token: token,
+            password: password,
+        }),
+    });
+
+    const data = await response.json();
+
+    return { message: data.message };
 }
