@@ -10,6 +10,10 @@ export async function isUserLoggedIn() {
     // Get the session token from the cookie store
     const sessionToken = cookieStore.get("sessionToken");
 
+    if (!sessionToken) {
+        return false;
+    }
+
     // Send a POST request to the validate-user endpoint of the API
     // The body of the request is a JSON string that contains the session token
     const response = await fetch(`${API_URL}/api/validate-user`, {

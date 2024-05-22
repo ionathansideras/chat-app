@@ -118,3 +118,10 @@ export async function logIn(
         redirect("/messages");
     }
 }
+
+// This function is used to log out a user.
+export async function logOut() {
+    // Remove the session token cookie
+    cookies().delete("sessionToken");
+    redirect("/login");
+}
