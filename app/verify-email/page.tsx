@@ -35,7 +35,7 @@ function VerifyEmail() {
             try {
                 // Making a POST request to the verify-email-token endpoint
                 const response = await fetch(
-                    `${API_URL}/api/verify-email-token`,
+                    `${API_URL}/api/auth/verify-email-token`,
                     {
                         method: "POST",
                         headers: {

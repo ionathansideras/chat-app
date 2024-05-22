@@ -12,7 +12,7 @@ export default async function MessagesPage() {
         redirect("/login");
     }
 
-    const response = await fetch(`${API_URL}/auth/api/messages`);
+    const response = await fetch(`${API_URL}/api/auth/messages`);
     const data = await response.json();
 
     const messages = data.message.messages;

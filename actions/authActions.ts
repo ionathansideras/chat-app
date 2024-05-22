@@ -58,7 +58,7 @@ export async function signUp(
     }
 
     // If there are no validation errors, make a POST request to the signup API
-    const response = await fetch(API_URL + "/auth/api/signup", {
+    const response = await fetch(API_URL + "/api/auth/signup", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -97,7 +97,7 @@ export async function logIn(
     }
 
     // Make a POST request to the login API with the user's email and password
-    const response = await fetch(API_URL + "/auth/api/login", {
+    const response = await fetch(API_URL + "/api/auth/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -150,7 +150,7 @@ export async function forgotPassword(
     }
 
     // Make a POST request to the forgot password API with the user's email
-    const response = await fetch(API_URL + "/auth/api/forgot-password-api", {
+    const response = await fetch(API_URL + "/api/auth/forgot-password-api", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -211,7 +211,7 @@ export async function createNewPassword(
     }
 
     // Make a POST request to the create new password API with the user's email, token, and new password
-    const response = await fetch(API_URL + "/auth/api/create-new-password", {
+    const response = await fetch(API_URL + "/api/auth/create-new-password", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

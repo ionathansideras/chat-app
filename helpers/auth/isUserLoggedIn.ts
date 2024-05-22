@@ -16,7 +16,7 @@ export async function isUserLoggedIn() {
 
     // Send a POST request to the validate-user endpoint of the API
     // The body of the request is a JSON string that contains the session token
-    const response = await fetch(`${API_URL}/api/validate-user`, {
+    const response = await fetch(`${API_URL}/api/auth/validate-user`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
