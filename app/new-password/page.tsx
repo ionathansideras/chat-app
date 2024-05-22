@@ -3,8 +3,16 @@ import React from "react";
 import { createNewPassword } from "@/actions/authActions";
 import { useFormState } from "react-dom";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 export default function NewPasswordPage() {
+    return (
+        <Suspense>
+            <FormPassword />
+        </Suspense>
+    );
+}
+function FormPassword() {
     // Using the useSearchParams hook to get the URL parameters
     const searchParams = useSearchParams();
     // Extracting the 'email' and 'token' parameters from the URL
