@@ -10,7 +10,7 @@ export default function VerifyEmailPage() {
     // Suspense allows you to "wait" for some code to load and declaratively specify a loading state (like a loading spinner)
     // In this case, while the VerifyEmail component is loading, the fallback will be rendered, which is a div with the text "Loading..."
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense>
             {/* The VerifyEmail component. This is the component that will be lazily loaded. */}
             <VerifyEmail />
         </Suspense>
@@ -26,7 +26,7 @@ function VerifyEmail() {
     const token = searchParams.get("token");
 
     // Setting up a state variable for the message to be displayed
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("loading...");
 
     // Using the useEffect hook to run code when the component mounts
     useEffect(() => {
