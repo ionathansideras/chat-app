@@ -88,7 +88,7 @@ export async function logIn(
     formData: FormData
 ): Promise<FormState> {
     // Extracting form data
-    const email = formData.get("email");
+    let email = formData.get("email");
     const password = formData.get("password");
 
     // Check if fields are not empty
@@ -111,20 +111,21 @@ export async function logIn(
     // Parse the response to JSON
     const data = await response.json();
 
-    // calc the milliseconds in a day and 30 days
-    const oneDay = 24 * 60 * 60 * 1000; // milliseconds in a day
-    const thirtyDays = oneDay * 30; // milliseconds in 30 days
+    // make email a string if it is not already
+    if (typeof email !== "string") {
+        email = String(email);
+    }
 
-    // create a cookie with the session token that expires in 30 days
-    cookies().set("sessionToken", data.message.sessionToken, {
-        expires: Date.now() + thirtyDays,
-    });
+    console.log(email);
+
+    // create a cookie with the user's email
+    cookies().set("email", email);
 
     // If the status is 200, the user logged in successfully
     if (data.status !== 200) {
         return { message: data.message };
     } else {
-        redirect("/messages");
+        redirect("/login/2fa");
     }
 }
 
@@ -132,6 +133,8 @@ export async function logIn(
 export async function logOut() {
     // Remove the session token cookie
     cookies().delete("sessionToken");
+    // Remove the email cookie
+    cookies().delete("email");
     // Redirect the user to the login page
     redirect("/login");
 }
@@ -227,4 +230,57 @@ export async function createNewPassword(
     const data = await response.json();
 
     return { message: data.message };
+}
+
+// this function is to verify the 2fa code
+export async function verify2faCode(
+    prevFormState: FormState,
+    formData: FormData
+): Promise<FormState> {
+    // Extracting form data
+    let code = formData.get("code");
+
+    // make code a string if it is not already
+    if (typeof code !== "string") {
+        code = String(code);
+    }
+
+    // Check if code is not empty
+    if (!code) {
+        return { message: "Code is required" };
+    }
+
+    // max length of the code is 6
+    if (code.length !== 6) {
+        return { message: "Code must be 6 characters long" };
+    }
+
+    // get the user's email from the cookie
+    const email = cookies().get("email");
+
+    // Make a POST request to the verify 2fa code API with the user's code
+    const response = await fetch(API_URL + "/api/auth/verify-2fa-code", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email: email?.value,
+            code: code,
+        }),
+    });
+
+    // Parse the response to JSON
+    const data = await response.json();
+
+    console.log(data);
+
+    // If the status is 200, the code is valid
+    if (data.status !== 200) {
+        return { message: data.message };
+    } else {
+        console.log(data.sessionToken);
+        cookies().set("sessionToken", data.message.sessionToken);
+        redirect("/messages");
+    }
 }

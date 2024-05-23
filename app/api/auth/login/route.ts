@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { verifyPassword } from "@/helpers/auth/hash";
 import { connectToDatabase } from "@/helpers/auth/connectToDatabase";
-const { v4: uuidv4 } = require("uuid");
+import { sendEmail } from "@/helpers/auth/sendEmail";
+import { createVerificationCodeHTML } from "@/helpers/auth/createVerificationCodeHTML";
 
 // This function handles POST requests for user login
 export async function POST(req: Request) {
@@ -49,29 +50,52 @@ export async function POST(req: Request) {
         });
     }
 
-    // Generate a new session token using the uuidv4 function
-    const newSessionToken = uuidv4();
+    // Generating a random 6-digit code
+    const code = Math.floor(100000 + Math.random() * 900000);
+
+    //  Set the date and time for the code expiration
+    const expireTime = new Date();
+
+    // Create the verification HTML using the imported createVerificationHTML function
+    const html = createVerificationCodeHTML(email, code);
 
     try {
-        // Update the user's session token in the database
-        await collection.updateOne(
-            { email: email },
-            { $set: { sessionToken: newSessionToken } }
-        );
+        // Send the verification email using the imported sendEmail function
+        await sendEmail(email, "Reset your password", html);
     } catch (error) {
-        // If an error occurs during the session token update, return a 500 status with a "Failed to update session token" message
+        // If an error occurs during the email sending process, return a 500 status code
         console.error(error);
         return NextResponse.json({
             status: 500,
-            message: "Failed to update session token",
+            message: "Failed to send verification email",
+        });
+    }
+
+    try {
+        // Update the user's 2fa code in the database
+        await collection.updateOne(
+            { email: email },
+            {
+                $set: {
+                    verificationCode: {
+                        code: code,
+                        expireTime: expireTime,
+                    },
+                },
+            }
+        );
+    } catch (error) {
+        // If an error occurs during the update process, return a 500 status code
+        console.error(error);
+        return NextResponse.json({
+            status: 500,
+            message: "Failed to add verification code to the database",
         });
     }
 
     // If all checks pass, return a 200 status with a "Success" message
     return NextResponse.json({
         status: 200,
-        message: {
-            sessionToken: newSessionToken,
-        },
+        message: "Success",
     });
 }

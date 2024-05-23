@@ -6,8 +6,6 @@ import { API_URL } from "@/constants";
 export default async function MessagesPage() {
     const user = await isUserLoggedIn();
 
-    console.log(user);
-
     if (!user) {
         redirect("/login");
     }
@@ -16,7 +14,6 @@ export default async function MessagesPage() {
     const data = await response.json();
 
     const messages = data.message.messages;
-    console.log(messages);
     return (
         <>
             <div>
