@@ -125,7 +125,7 @@ export async function logIn(
     if (data.status !== 200) {
         return { message: data.message };
     } else {
-        redirect("/login/2fa");
+        return { message: "Success" };
     }
 }
 

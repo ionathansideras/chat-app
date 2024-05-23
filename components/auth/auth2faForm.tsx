@@ -3,7 +3,7 @@ import React from "react";
 import { useFormState } from "react-dom";
 import { verify2faCode } from "@/actions/authActions";
 
-export default function Auth2faPage() {
+export default function Auth2faForm() {
     // Define the initial state
     const initialState = { message: "" };
 
