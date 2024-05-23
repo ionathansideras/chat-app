@@ -116,8 +116,6 @@ export async function logIn(
         email = String(email);
     }
 
-    console.log(email);
-
     // create a cookie with the user's email
     cookies().set("email", email);
 
@@ -273,13 +271,10 @@ export async function verify2faCode(
     // Parse the response to JSON
     const data = await response.json();
 
-    console.log(data);
-
     // If the status is 200, the code is valid
     if (data.status !== 200) {
         return { message: data.message };
     } else {
-        console.log(data.sessionToken);
         cookies().set("sessionToken", data.message.sessionToken);
         redirect("/messages");
     }
