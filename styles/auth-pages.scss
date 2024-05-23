@@ -1,3 +1,5 @@
+@import "variables";
+
 .auth-container {
     display: flex;
     width: 100%;
@@ -5,9 +7,108 @@
     justify-content: center;
     align-items: center;
 
+    .section-2fa {
+        position: fixed;
+        z-index: 4;
+    }
+    .auth-2fa-cover {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1;
+    }
+
     section {
         width: 300px;
         height: fit-content;
-        //background-color: red !important;
+        background-color: var(--primary-color);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h1,
+        h2 {
+            margin: 0;
+            text-align: center;
+        }
+
+        p {
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+            width: 100%;
+
+            label {
+                margin-bottom: 5px;
+            }
+
+            input {
+                height: 30px;
+                margin-bottom: 10px;
+                border: none;
+                border-radius: 5px;
+                border: 1px solid var(--secondary-color);
+                background-color: var(--input-color);
+            }
+
+            button {
+                width: 100%;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                background-color: var(--button-color);
+                color: white;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                &:hover {
+                    background-color: var(--button-color-hover);
+                }
+            }
+
+            .auth-error {
+                color: var(--error-color);
+                margin-top: 10px;
+                margin-bottom: 14px;
+            }
+
+            .auth-redirect {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                a {
+                    width: 40%;
+                }
+            }
+
+            a {
+                color: white;
+                background-color: var(--navigate-color);
+                margin-top: 10px;
+                text-align: center;
+                padding: 10px;
+                border-radius: 5px;
+                text-decoration: none;
+                transition: background-color 0.3s;
+
+                &:hover {
+                    background-color: var(--navigate-color-hover);
+                }
+            }
+        }
     }
 }

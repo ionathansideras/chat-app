@@ -41,8 +41,8 @@ export default function LoginPage() {
                     <AuthSubmitButton> Log In </AuthSubmitButton>
                     {/* Links to the sign up and forgot password pages */}
                     <div className="auth-redirect">
-                        <Link href="/signup">go to sign up</Link>
-                        <Link href="/forgot-password">forgot password</Link>
+                        <Link href="/signup">Go to sign up</Link>
+                        <Link href="/forgot-password">New password</Link>
                     </div>
                 </form>
                 {formState?.message === "Success" ? <Auth2faForm /> : null}

@@ -19,31 +19,6 @@ body {
     text-shadow: 1px 1px rgba(0, 0, 0, 0.1);
 }
 
-[data-theme="dark"] {
-    --color-bg1: rgb(54, 27, 81); // Darker purple
-    --color-bg2: rgb(0, 8, 41); // Darker blue
-    --color1: 9, 56, 128; // Darker blue
-    --color2: 110, 37, 128; // Darker pink
-    --color3: 50, 110, 128; // Darker cyan
-    --color4: 100, 25, 25; // Darker red
-    --color5: 90, 90, 25; // Darker yellow
-    --color-interactive: 70, 50, 128; // Darker interactive color
-    --circle-size: 80%;
-    --blending: hard-light;
-}
-
-[data-theme="light"] {
-    --color-bg1: rgb(212, 108, 255); // Lighter purple
-    --color-bg2: rgb(66, 122, 255); // Lighter blue
-    --color1: 36, 226, 255; // Lighter blue
-    --color2: 442, 148, 255; // Lighter pink
-    --color3: 200, 440, 255; // Lighter cyan
-    --color4: 400, 100, 100; // Lighter red
-    --color5: 360, 360, 100; // Lighter yellow
-    --color-interactive: 280, 200, 255; // Lighter interactive color
-    --circle-size: 80%;
-    --blending: normal;
-}
 @keyframes moveInCircle {
     0% {
         transform: rotate(0deg);

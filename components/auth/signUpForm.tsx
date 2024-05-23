@@ -31,7 +31,9 @@ export default function SignUpForm() {
                 name="confirmPassword"
                 className="signup-verify-password-input"
             />
-            {formState?.message ? <p>{formState?.message}</p> : null}
+            {formState?.message ? (
+                <p className="auth-error">{formState?.message}</p>
+            ) : null}
             <AuthSubmitButton> Sign Up </AuthSubmitButton>
             <Link className="auh-one-redirect" href="/login">
                 Go to login
