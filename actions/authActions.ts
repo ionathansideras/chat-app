@@ -275,7 +275,12 @@ export async function verify2faCode(
     if (data.status !== 200) {
         return { message: data.message };
     } else {
-        cookies().set("sessionToken", data.message.sessionToken);
+        const oneDay = 24 * 60 * 60 * 1000;
+        const oneWeek = oneDay * 7;
+
+        cookies().set("sessionToken", data.message.sessionToken, {
+            expires: Date.now() + oneWeek,
+        });
         redirect("/messages");
     }
 }

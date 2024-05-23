@@ -18,6 +18,13 @@ export default function LoginPage() {
     // Using the useFormState hook to manage the form state
     const [formState, formAction] = useFormState(logIn, initialState);
 
+    const oneDay = 24 * 60 * 60 * 1000;
+
+    const oneWeekFromNow = Date.now() + oneDay * 7;
+
+    console.log(Date.now());
+    console.log(oneWeekFromNow);
+
     return (
         <main>
             <h1>Login</h1>
