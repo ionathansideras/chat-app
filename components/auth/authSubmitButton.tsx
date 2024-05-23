@@ -15,9 +15,17 @@ export default function AuthSubmitButton({
 
     // If the form is pending, return a disabled button with the text "Loading..."
     if (status.pending === true) {
-        return <button disabled>Loading...</button>;
+        return (
+            <button className="auth-loading-button" disabled>
+                Loading...
+            </button>
+        );
     } else {
         // If the form is not pending, return a submit button with the child elements
-        return <button type="submit">{children}</button>;
+        return (
+            <button className="auth-submit" type="submit">
+                {children}
+            </button>
+        );
     }
 }

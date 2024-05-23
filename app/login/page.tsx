@@ -9,6 +9,8 @@ import Link from "next/link";
 import AuthSubmitButton from "@/components/auth/authSubmitButton";
 // Importing the Auth2faForm component
 import Auth2faForm from "@/components/auth/auth2faForm";
+// Importing the BackgroundElement component
+import BackgroundElement from "@/components/backgroundElement";
 
 // The login page component
 export default function LoginPage() {
@@ -19,30 +21,33 @@ export default function LoginPage() {
     const [formState, formAction] = useFormState(logIn, initialState);
 
     return (
-        <main>
-            <h1>Login</h1>
-            <p>Log in to your account</p>
-            <form action={formAction}>
-                <label>
-                    Email
-                    <input type="email" name="email" />
-                </label>
-                <br></br>
-                <label>
-                    Password
-                    <input type="password" name="password" />
-                </label>
-                <br></br>
-                {/* Displaying a message if there is one in the form state */}
-                {formState?.message ? <p>{formState?.message}</p> : null}
-                <br></br>
-                {/* The submit button for the form */}
-                <AuthSubmitButton> Log In </AuthSubmitButton>
-                {/* Links to the sign up and forgot password pages */}
-                <Link href="/signup">go to sign up</Link>
-                <Link href="/forgot-password">forgot password</Link>
-            </form>
-            {formState?.message === "Success" ? <Auth2faForm /> : null}
+        <main className="auth-container">
+            <section>
+                <h1>Login</h1>
+                <p>Log in to your account</p>
+                <form action={formAction} className="auth-form">
+                    <label htmlFor="login-email-input">Email</label>
+                    <input type="email" name="email" id="login-email-input" />
+
+                    <label htmlFor="login-password-input">Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="login-password-input"
+                    />
+                    {/* Displaying a message if there is one in the form state */}
+                    {formState?.message ? <p>{formState?.message}</p> : null}
+                    {/* The submit button for the form */}
+                    <AuthSubmitButton> Log In </AuthSubmitButton>
+                    {/* Links to the sign up and forgot password pages */}
+                    <div className="auth-redirect">
+                        <Link href="/signup">go to sign up</Link>
+                        <Link href="/forgot-password">forgot password</Link>
+                    </div>
+                </form>
+                {formState?.message === "Success" ? <Auth2faForm /> : null}
+                <BackgroundElement />
+            </section>
         </main>
     );
 }

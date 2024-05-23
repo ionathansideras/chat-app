@@ -1,5 +1,6 @@
 // Importing the SignUpForm component
 import SignUpForm from "@/components/auth/signUpForm";
+import BackgroundElement from "@/components/backgroundElement";
 
 // Metadata for the sign up page
 export const metadata = {
@@ -18,10 +19,13 @@ export const metadata = {
 export default function SignUpPage() {
     return (
         // The main tag is used to wrap the main content of the page
-        <main>
-            <h1>Sign Up</h1>
-            <p>Create a new account</p>
-            <SignUpForm />
+        <main className="auth-container">
+            <section>
+                <h1>Sign Up</h1>
+                <p>Create a new account</p>
+                <SignUpForm />
+                <BackgroundElement />
+            </section>
         </main>
     );
 }

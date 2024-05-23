@@ -8,6 +8,10 @@ import { useFormState } from "react-dom";
 import { useSearchParams } from "next/navigation";
 // Importing the Suspense component from react
 import { Suspense } from "react";
+// Importing the BackgroundElement component
+import BackgroundElement from "@/components/backgroundElement";
+// Importing the AuthSubmitButton component
+import AuthSubmitButton from "@/components/auth/authSubmitButton";
 
 // The NewPasswordPage component
 export default function NewPasswordPage() {
@@ -37,18 +41,33 @@ function FormPassword() {
     );
 
     return (
-        <>
-            <h1>New Password Page</h1>
-            {/* The form for creating a new password */}
-            <form action={formAction}>
-                <label>New Password</label>
-                <input type="password" name="password" />
-                <label>Confirm new Password</label>
-                <input type="password" name="confirmPassword" />
-                {/* Displaying a message if there is one in the form state */}
-                {formState.message && <p>{formState.message}</p>}
-                <button type="submit">Submit</button>
-            </form>
-        </>
+        <main className="auth-container">
+            <section>
+                <h1>New Password Page</h1>
+                <p>Set a new password for your account</p>
+                {/* The form for creating a new password */}
+                <form action={formAction} className="auth-form">
+                    <label htmlFor="new-password-input">New Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="new-password-input"
+                    />
+
+                    <label htmlFor="new-confirm-password-input">
+                        Confirm new Password
+                    </label>
+                    <input
+                        type="password"
+                        name="confirmPassword"
+                        id="new-confirm-password-input"
+                    />
+                    {/* Displaying a message if there is one in the form state */}
+                    {formState.message && <p>{formState.message}</p>}
+                    <AuthSubmitButton> Set New Password </AuthSubmitButton>
+                </form>
+                <BackgroundElement />
+            </section>
+        </main>
     );
 }

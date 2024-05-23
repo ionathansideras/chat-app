@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { API_URL } from "@/constants";
+import BackgroundElement from "@/components/backgroundElement";
 
 // This is the main component for the Verify Email page
 export default function VerifyEmailPage() {
@@ -64,6 +65,7 @@ function VerifyEmail() {
     return (
         <div>
             <h1>{message}</h1>
+            <BackgroundElement />
         </div>
     );
 }

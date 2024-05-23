@@ -13,31 +13,29 @@ export default function SignUpForm() {
     const [formState, formAction] = useFormState(signUp, initialState);
 
     return (
-        <form action={formAction}>
-            <label>
-                Username
-                <input type="text" name="username" />
-            </label>
-            <br></br>
-            <label>
-                Email
-                <input type="email" name="email" />
-            </label>
-            <br></br>
-            <label>
-                Password
-                <input type="password" name="password" />
-            </label>
-            <br></br>
-            <label>
+        <form action={formAction} className="auth-form">
+            <label htmlFor="signup-username-input">Username</label>
+            <input type="text" name="username" id="signup-username-input" />
+
+            <label htmlFor="signup-email-input">Email</label>
+            <input type="email" name="email" id="signup-email-input" />
+
+            <label htmlFor="signup-password-input">Password</label>
+            <input type="password" name="password" id="signup-password-input" />
+
+            <label htmlFor="signup-verify-password-input">
                 Confirm Password
-                <input type="password" name="confirmPassword" />
             </label>
-            <br></br>
+            <input
+                type="password"
+                name="confirmPassword"
+                className="signup-verify-password-input"
+            />
             {formState?.message ? <p>{formState?.message}</p> : null}
-            <br></br>
             <AuthSubmitButton> Sign Up </AuthSubmitButton>
-            <Link href="/login">go to login</Link>
+            <Link className="auh-one-redirect" href="/login">
+                Go to login
+            </Link>
         </form>
     );
 }

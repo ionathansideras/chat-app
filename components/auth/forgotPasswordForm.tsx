@@ -16,13 +16,15 @@ export default function ForgotPasswordForm() {
 
     return (
         // The form for requesting a password reset
-        <form action={formAction}>
-            <label>Email</label>
-            <input type="email" name="email" />
+        <form action={formAction} className="auth-form">
+            <label htmlFor="forgot-password-input">Email</label>
+            <input type="email" name="email" id="forgot-password-input" />
             {/* Displaying a message if there is one in the form state */}
             {formState.message && <p>{formState.message}</p>}
             {/* The submit button for the form */}
-            <button type="submit">Send</button>
+            <button className="auth-submit" type="submit">
+                Send
+            </button>
         </form>
     );
 }

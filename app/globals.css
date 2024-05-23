@@ -1,9 +1,0 @@
-[data-theme="light"] .lorem {
-    background: rgb(255, 92, 92);
-    color: white;
-}
-
-[data-theme="dark"] .lorem {
-    background: rgb(92, 92, 255);
-    color: black;
-}
