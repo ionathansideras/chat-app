@@ -66,7 +66,9 @@ function FormPassword() {
                     />
                     {/* Displaying a message if there is one in the form state */}
                     {formState.status === 200 ? (
-                        <p className="auth-success">{formState.message}</p>
+                        <p className="auth-message-success">
+                            {formState.message}
+                        </p>
                     ) : (
                         <p className="auth-error">{formState.message}</p>
                     )}

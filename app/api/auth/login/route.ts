@@ -61,7 +61,7 @@ export async function POST(req: Request) {
 
     try {
         // Send the verification email using the imported sendEmail function
-        await sendEmail(email, "Reset your password", html);
+        await sendEmail(email, "2FA Verification Number", html);
     } catch (error) {
         // If an error occurs during the email sending process, return a 500 status code
         console.error(error);
