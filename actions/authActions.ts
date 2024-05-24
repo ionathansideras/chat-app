@@ -147,7 +147,7 @@ export async function forgotPassword(
 
     // Check if email is not empty
     if (!email) {
-        return { message: "Email is required" };
+        return { message: "Email is required", status: 400 };
     }
 
     // Make a POST request to the forgot password API with the user's email
@@ -165,7 +165,7 @@ export async function forgotPassword(
     const data = await response.json();
 
     // return the message from the response
-    return { message: data.message };
+    return { message: data.message, status: data.status };
 }
 
 // This function is used to create a new password for a user.
@@ -227,7 +227,7 @@ export async function createNewPassword(
     // Parse the response to JSON
     const data = await response.json();
 
-    return { message: data.message };
+    return { message: data.message, status: data.status };
 }
 
 // this function is to verify the 2fa code

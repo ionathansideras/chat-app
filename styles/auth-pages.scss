@@ -10,15 +10,38 @@
     .section-2fa {
         position: fixed;
         z-index: 4;
+        transform: scale(0);
+        opacity: 0;
+        transition: all 0.5s;
+
+        .auth-timer {
+            margin-top: 10px;
+            font-size: 50px;
+        }
+        .auth-timer-error {
+            color: var(--error-color);
+        }
     }
+
+    .section-2fa.active {
+        transform: scale(1);
+        opacity: 1;
+    }
+
     .auth-2fa-cover {
         position: fixed;
         top: 0;
         left: 0;
+        opacity: 0;
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.7);
         z-index: 1;
+        transition: all 0.5s;
+    }
+
+    .auth-2fa-cover.active {
+        opacity: 1;
     }
 
     section {
@@ -51,21 +74,21 @@
             width: 100%;
 
             label {
-                margin-bottom: 5px;
+                margin-bottom: 7px;
             }
 
             input {
                 height: 30px;
                 margin-bottom: 10px;
                 border: none;
+                padding-left: 10px;
                 border-radius: 5px;
-                border: 1px solid var(--secondary-color);
+                border: 1px solid var(--input-border-color);
                 background-color: var(--input-color);
             }
 
-            button {
-                width: 100%;
-                padding: 10px;
+            .auth-submit {
+                height: 35px;
                 border: none;
                 border-radius: 5px;
                 background-color: var(--button-color);
@@ -79,12 +102,69 @@
                 }
             }
 
-            .auth-error {
-                color: var(--error-color);
-                margin-top: 10px;
-                margin-bottom: 14px;
+            .auth-submit.disabled {
+                background-color: var(--button-color);
+                cursor: default;
             }
 
+            .auth-loading-button {
+                height: 35px;
+                border-radius: 5px;
+                background-color: var(--button-color);
+
+                .lds-ring,
+                .lds-ring div {
+                    box-sizing: border-box;
+                }
+                .lds-ring {
+                    display: inline-block;
+                    position: relative;
+                    width: 28px;
+                    height: 28px;
+                }
+                .lds-ring div {
+                    box-sizing: border-box;
+                    display: block;
+                    position: absolute;
+                    width: 22px;
+                    height: 22px;
+                    margin: 2px;
+                    border: 4px solid white;
+                    border-radius: 90%;
+                    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1)
+                        infinite;
+                    border-color: white transparent transparent transparent;
+                }
+                .lds-ring div:nth-child(1) {
+                    animation-delay: -0.45s;
+                }
+                .lds-ring div:nth-child(2) {
+                    animation-delay: -0.3s;
+                }
+                .lds-ring div:nth-child(3) {
+                    animation-delay: -0.15s;
+                }
+                @keyframes lds-ring {
+                    0% {
+                        transform: rotate(0deg);
+                    }
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+            }
+
+            .auth-error {
+                color: var(--error-color);
+                margin-top: 0px;
+                margin-bottom: 10px;
+            }
+
+            .auth-message-success {
+                color: var(--success-color);
+                margin-top: 0px;
+                margin-bottom: 10px;
+            }
             .auth-redirect {
                 display: flex;
                 align-items: center;
@@ -109,6 +189,113 @@
                     background-color: var(--navigate-color-hover);
                 }
             }
+        }
+    }
+}
+
+.auth-verify-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+        margin: 0;
+        text-align: center;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .auth-h1-verify-success {
+        background-color: var(--success-color);
+        color: white;
+    }
+
+    .auth-h1-verify-error {
+        background-color: var(--error-color);
+        color: white;
+    }
+
+    $duration: 1000;
+
+    @function randomNum($min, $max) {
+        $rand: random();
+        $randomNum: $min + floor($rand * (($max - $min) + 1));
+
+        @return $randomNum;
+    }
+
+    .confetti {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        position: fixed;
+    }
+
+    .confetti-piece {
+        position: absolute;
+        width: 8px;
+        height: 16px;
+        background: var(--confetti-yellow);
+        top: 0;
+        opacity: 0;
+
+        @for $i from 1 through 13 {
+            &:nth-child(#{$i}) {
+                left: $i * 7%;
+                transform: rotate(#{randomNum(-80, 80)}deg);
+                animation: makeItRain $duration * 1ms infinite ease-out;
+                animation-delay: #{randomNum(0, $duration * 1)}ms;
+                animation-duration: #{randomNum(
+                        $duration * 1.7,
+                        $duration * 4.2
+                    )}ms;
+            }
+        }
+
+        &:nth-child(odd) {
+            background: var(--confetti-blue);
+        }
+
+        &:nth-child(even) {
+            z-index: 1;
+        }
+
+        &:nth-child(4n) {
+            width: 5px;
+            height: 12px;
+            animation-duration: $duration * 2ms;
+        }
+
+        &:nth-child(3n) {
+            width: 3px;
+            height: 10px;
+            animation-duration: $duration * 2.5ms;
+            animation-delay: $duration * 1ms;
+        }
+
+        &:nth-child(4n-7) {
+            background: var(--confetti-pink);
+        }
+    }
+
+    @keyframes makeItRain {
+        from {
+            opacity: 0;
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        to {
+            transform: translateY(100vh);
         }
     }
 }

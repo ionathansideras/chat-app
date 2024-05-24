@@ -32,13 +32,15 @@ function FormPassword() {
     const token = searchParams.get("token") || "";
 
     // Defining the initial state for the form
-    const initialState = { message: "" };
+    const initialState = { message: "", status: 0 };
     // Using the useFormState hook to manage the form state
     const [formState, formAction] = useFormState(
         // Binding the email and token parameters to the createNewPassword action
         createNewPassword.bind(null, email, token),
         initialState
     );
+
+    console.log(formState);
 
     return (
         <main className="auth-container">
@@ -63,7 +65,11 @@ function FormPassword() {
                         id="new-confirm-password-input"
                     />
                     {/* Displaying a message if there is one in the form state */}
-                    {formState.message && <p>{formState.message}</p>}
+                    {formState.status === 200 ? (
+                        <p className="auth-success">{formState.message}</p>
+                    ) : (
+                        <p className="auth-error">{formState.message}</p>
+                    )}
                     <AuthSubmitButton> Set New Password </AuthSubmitButton>
                 </form>
                 <BackgroundElement />

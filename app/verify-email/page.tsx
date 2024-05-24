@@ -3,7 +3,6 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { API_URL } from "@/constants";
-import BackgroundElement from "@/components/backgroundElement";
 
 // This is the main component for the Verify Email page
 export default function VerifyEmailPage() {
@@ -27,7 +26,10 @@ function VerifyEmail() {
     const token = searchParams.get("token");
 
     // Setting up a state variable for the message to be displayed
-    const [message, setMessage] = useState("loading...");
+    const [response, setResponse] = useState({
+        message: "pending",
+        status: 0,
+    });
 
     // Using the useEffect hook to run code when the component mounts
     useEffect(() => {
@@ -50,7 +52,7 @@ function VerifyEmail() {
                 const data = await response.json();
 
                 // Setting the message state variable to the message from the response
-                setMessage(data.message);
+                setResponse(data);
             } catch (error) {
                 // If an error occurs, log it to the console
                 console.error(error);
@@ -62,10 +64,38 @@ function VerifyEmail() {
     }, [email, token]); // The empty array means this useEffect will only run once, when the component mounts
 
     // Rendering the component
-    return (
-        <div>
-            <h1>{message}</h1>
-            <BackgroundElement />
-        </div>
-    );
+    if (response.status === 0) {
+        return (
+            <main className="auth-verify-container">
+                <h1>Verifying...</h1>
+            </main>
+        );
+    } else if (response.status === 200) {
+        return (
+            <main className="auth-verify-container">
+                <h1 className="auth-h1-verify-success">{response.message}</h1>
+                <div className="confetti">
+                    <div className="confetti-piece"></div>
+                    <div className="confetti-piece"></div>
+                    <div className="confetti-piece"></div>
+                    <div className="confetti-piece"></div>
+                    <div className="confetti-piece"></div>
+                    <div className="confetti-piece"></div>
+                    <div className="confetti-piece"></div>
+                    <div className="confetti-piece"></div>
+                    <div className="confetti-piece"></div>
+                    <div className="confetti-piece"></div>
+                    <div className="confetti-piece"></div>
+                    <div className="confetti-piece"></div>
+                    <div className="confetti-piece"></div>
+                </div>
+            </main>
+        );
+    } else {
+        return (
+            <main className="auth-verify-container">
+                <h1 className="auth-h1-verify-error">{response.message}</h1>
+            </main>
+        );
+    }
 }

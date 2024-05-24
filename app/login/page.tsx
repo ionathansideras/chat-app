@@ -36,7 +36,9 @@ export default function LoginPage() {
                         id="login-password-input"
                     />
                     {/* Displaying a message if there is one in the form state */}
-                    {formState?.message ? <p>{formState?.message}</p> : null}
+                    {formState?.message && formState?.message !== "Success" ? (
+                        <p className="auth-error">{formState?.message}</p>
+                    ) : null}
                     {/* The submit button for the form */}
                     <AuthSubmitButton> Log In </AuthSubmitButton>
                     {/* Links to the sign up and forgot password pages */}

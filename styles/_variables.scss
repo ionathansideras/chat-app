@@ -3,6 +3,7 @@
     --primary-color: #ffffff;
     --secondary-color: #515252;
     --input-color: #f1f1f1;
+    --input-border-color: #d1d1d1;
 
     --color-bg1: rgb(212, 108, 255); // Lighter purple
     --color-bg2: rgb(66, 122, 255); // Lighter blue
@@ -20,6 +21,7 @@
     --primary-color: #30363d;
     --secondary-color: #e4e4e4;
     --input-color: #484f58;
+    --input-border-color: #3e444b;
 
     --color-bg1: rgb(54, 27, 81); // Darker purple
     --color-bg2: rgb(0, 8, 41); // Darker blue
@@ -35,8 +37,13 @@
 
 :root {
     --error-color: #dc3545;
+    --success-color: #28a745;
     --button-color: #6f42c1;
     --button-color-hover: #5a3e9b;
     --navigate-color: #006ad4;
     --navigate-color-hover: #0056b3;
+
+    --confetti-yellow: #ffd300;
+    --confetti-blue: #17d3ff;
+    --confetti-pink: #ff4e91;
 }
