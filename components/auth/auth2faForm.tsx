@@ -47,7 +47,7 @@ export default function Auth2faForm() {
                     <label htmlFor="2fa-code">Your code</label>
                     <div>
                         <input
-                            type="password"
+                            type="text"
                             name="confirmPassword"
                             id="2fa-code"
                         />
