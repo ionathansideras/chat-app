@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "@/styles/background.scss";
-import "@/styles/auth-pages.scss";
+import "@/styles/index.scss";
 import { ThemeProvider } from "next-themes";
 const inter = Inter({ subsets: ["latin"] });
+import AuthHeader from "@/components/auth/authHeader";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -18,7 +18,10 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <body className={inter.className}>
-                <ThemeProvider enableSystem={false}>{children}</ThemeProvider>
+                <ThemeProvider enableSystem={false}>
+                    <AuthHeader />
+                    {children}
+                </ThemeProvider>
             </body>
         </html>
     );

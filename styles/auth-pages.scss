@@ -77,14 +77,37 @@
                 margin-bottom: 7px;
             }
 
-            input {
-                height: 30px;
+            div {
+                display: flex;
+                align-items: center;
                 margin-bottom: 10px;
-                border: none;
-                padding-left: 10px;
-                border-radius: 5px;
-                border: 1px solid var(--input-border-color);
-                background-color: var(--input-color);
+
+                input {
+                    height: 30px;
+                    border: none;
+                    padding-left: 10px;
+                    border-radius: 5px 0px 0px 5px;
+                    border: 1px solid var(--input-border-color);
+                    border-right: none;
+                    width: 90%;
+                    background-color: var(--input-color);
+
+                    &:focus {
+                        outline: none;
+                    }
+                }
+
+                img {
+                    background-color: var(--input-color);
+                    border: 1px solid var(--input-border-color);
+                    border-left: none;
+                    border-radius: 0px 5px 5px 0px;
+                    padding: 1px;
+                }
+
+                .password-eye {
+                    cursor: pointer;
+                }
             }
 
             .auth-submit {

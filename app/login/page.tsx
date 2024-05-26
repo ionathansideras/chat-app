@@ -11,6 +11,15 @@ import AuthSubmitButton from "@/components/auth/authSubmitButton";
 import Auth2faForm from "@/components/auth/auth2faForm";
 // Importing the BackgroundElement component
 import BackgroundElement from "@/components/backgroundElement";
+// Importing the Image component from next/image
+import Image from "next/image";
+// Importing the eyeOpen and eyeClosed images
+import eyeOpen from "@/assets/eye-open.png";
+import eyeClosed from "@/assets/eye-closed.png";
+// Importing the email image
+import email from "@/assets/email.png";
+// Importing the useState hook from react
+import { useState } from "react";
 
 // The login page component
 export default function LoginPage() {
@@ -20,6 +29,8 @@ export default function LoginPage() {
     // Using the useFormState hook to manage the form state
     const [formState, formAction] = useFormState(logIn, initialState);
 
+    const [showPassword, setShowPassword] = useState(true);
+
     return (
         <main className="auth-container">
             <section>
@@ -27,14 +38,32 @@ export default function LoginPage() {
                 <p>Log in to your account</p>
                 <form action={formAction} className="auth-form">
                     <label htmlFor="login-email-input">Email</label>
-                    <input type="email" name="email" id="login-email-input" />
+                    <div>
+                        <input
+                            type="email"
+                            name="email"
+                            id="login-email-input"
+                        />
+                        <Image src={email} alt="Email" width={30} height={30} />
+                    </div>
 
                     <label htmlFor="login-password-input">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="login-password-input"
-                    />
+                    <div>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            id="login-password-input"
+                        />
+                        <Image
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="password-eye"
+                            src={showPassword ? eyeOpen : eyeClosed}
+                            alt="Password"
+                            width={30}
+                            height={30}
+                        />
+                    </div>
+
                     {/* Displaying a message if there is one in the form state */}
                     {formState?.message && formState?.message !== "Success" ? (
                         <p className="auth-error">{formState?.message}</p>

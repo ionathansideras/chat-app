@@ -5,6 +5,8 @@ import { useFormState } from "react-dom";
 import { verify2faCode } from "@/actions/authActions";
 import AuthSubmitButton from "@/components/auth/authSubmitButton";
 import MyTimer from "@/components/auth/timer2fa";
+import Image from "next/image";
+import password from "@/assets/key.png";
 
 export default function Auth2faForm() {
     // Define the initial state
@@ -43,7 +45,20 @@ export default function Auth2faForm() {
                 />
                 <form action={formAction} className="auth-form">
                     <label htmlFor="2fa-code">Your code</label>
-                    <input type="text" name="code" id="2fa-code" />
+                    <div>
+                        <input
+                            type="password"
+                            name="confirmPassword"
+                            id="2fa-code"
+                        />
+                        <Image
+                            src={password}
+                            alt="2fa-code"
+                            width={30}
+                            height={30}
+                        />
+                    </div>
+
                     {formState.message && (
                         <p className="auth-error">{formState.message}</p>
                     )}

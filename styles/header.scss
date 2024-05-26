@@ -1,0 +1,22 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    height: 10;
+    width: 90%;
+
+    padding: 20px 5%;
+
+    img {
+        cursor: pointer;
+    }
+
+    .theme-switch {
+        transition: transform 0.2s;
+    }
+    .theme-switch:active {
+        transform: rotate(180deg);
+    }
+}

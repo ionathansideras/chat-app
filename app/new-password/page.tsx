@@ -12,6 +12,15 @@ import { Suspense } from "react";
 import BackgroundElement from "@/components/backgroundElement";
 // Importing the AuthSubmitButton component
 import AuthSubmitButton from "@/components/auth/authSubmitButton";
+// Importing the Image component from next/image
+import Image from "next/image";
+// Importing the eyeOpen and eyeClosed images
+import eyeOpen from "@/assets/eye-open.png";
+import eyeClosed from "@/assets/eye-closed.png";
+// Importing the password image
+import password from "@/assets/key.png";
+// Importing the useState hook from react
+import { useState } from "react";
 
 // The NewPasswordPage component
 export default function NewPasswordPage() {
@@ -30,6 +39,9 @@ function FormPassword() {
     // Extracting the 'email' and 'token' parameters from the URL
     const email = searchParams.get("email") || "";
     const token = searchParams.get("token") || "";
+
+    // Using the useState hook to manage the showPassword state
+    const [showPassword, setShowPassword] = useState(true);
 
     // Defining the initial state for the form
     const initialState = { message: "", status: 0 };
@@ -50,20 +62,38 @@ function FormPassword() {
                 {/* The form for creating a new password */}
                 <form action={formAction} className="auth-form">
                     <label htmlFor="new-password-input">New Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="new-password-input"
-                    />
+                    <div>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            id="new-password-input"
+                        />
+                        <Image
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="password-eye"
+                            src={showPassword ? eyeOpen : eyeClosed}
+                            alt="Password"
+                            width={30}
+                            height={30}
+                        />
+                    </div>
 
-                    <label htmlFor="new-confirm-password-input">
-                        Confirm new Password
+                    <label htmlFor="new-password-confirm">
+                        Confirm Password
                     </label>
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        id="new-confirm-password-input"
-                    />
+                    <div>
+                        <input
+                            type="password"
+                            name="confirmPassword"
+                            id="new-password-confirm"
+                        />
+                        <Image
+                            src={password}
+                            alt="Password"
+                            width={30}
+                            height={30}
+                        />
+                    </div>
                     {/* Displaying a message if there is one in the form state */}
                     {formState.status === 200 ? (
                         <p className="auth-message-success">

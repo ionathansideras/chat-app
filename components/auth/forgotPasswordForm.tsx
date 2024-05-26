@@ -8,6 +8,10 @@ import { useFormState } from "react-dom";
 import Link from "next/link";
 // Importing the AuthSubmitButton component
 import AuthSubmitButton from "@/components/auth/authSubmitButton";
+// Importing the Image component from next/image
+import Image from "next/image";
+// Importing the email image
+import email from "@/assets/email.png";
 
 // The ForgotPasswordForm component
 export default function ForgotPasswordForm() {
@@ -24,7 +28,10 @@ export default function ForgotPasswordForm() {
         // The form for requesting a password reset
         <form action={formAction} className="auth-form">
             <label htmlFor="forgot-password-input">Email</label>
-            <input type="email" name="email" id="forgot-password-input" />
+            <div>
+                <input type="email" name="email" id="forgot-password-input" />
+                <Image src={email} alt="Email" width={30} height={30} />
+            </div>
             {/* Displaying a message if there is one in the form state */}
             {formState?.status == 200 ? (
                 <p className="auth-message-success">{formState.message}</p>
