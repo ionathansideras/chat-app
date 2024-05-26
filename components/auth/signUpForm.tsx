@@ -26,13 +26,25 @@ export default function SignUpForm() {
             <label htmlFor="signup-username-input">Username</label>
             <div>
                 <input type="text" name="username" id="signup-username-input" />
-                <Image src={user} alt="Username" width={30} height={30} />
+                <Image
+                    src={user}
+                    alt="Username"
+                    width={30}
+                    height={30}
+                    priority
+                />
             </div>
 
             <label htmlFor="signup-email-input">Email</label>
             <div>
                 <input type="email" name="email" id="signup-email-input" />
-                <Image src={email} alt="Email" width={30} height={30} />
+                <Image
+                    src={email}
+                    alt="Email"
+                    width={30}
+                    height={30}
+                    priority
+                />
             </div>
 
             <label htmlFor="signup-password-input">Password</label>
@@ -49,6 +61,7 @@ export default function SignUpForm() {
                     alt="Password"
                     width={30}
                     height={30}
+                    priority
                 />
             </div>
 
@@ -61,7 +74,13 @@ export default function SignUpForm() {
                     name="confirmPassword"
                     id="signup-verify-password-input"
                 />
-                <Image src={password} alt="Password" width={30} height={30} />
+                <Image
+                    src={password}
+                    alt="Password"
+                    width={30}
+                    height={30}
+                    priority
+                />
             </div>
 
             {formState?.message ? (

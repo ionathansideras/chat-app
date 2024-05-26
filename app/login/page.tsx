@@ -44,7 +44,13 @@ export default function LoginPage() {
                             name="email"
                             id="login-email-input"
                         />
-                        <Image src={email} alt="Email" width={30} height={30} />
+                        <Image
+                            src={email}
+                            alt="Email"
+                            width={30}
+                            height={30}
+                            priority
+                        />
                     </div>
 
                     <label htmlFor="login-password-input">Password</label>
@@ -61,6 +67,7 @@ export default function LoginPage() {
                             alt="Password"
                             width={30}
                             height={30}
+                            priority
                         />
                     </div>
 

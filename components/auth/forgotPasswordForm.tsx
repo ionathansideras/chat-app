@@ -30,7 +30,13 @@ export default function ForgotPasswordForm() {
             <label htmlFor="forgot-password-input">Email</label>
             <div>
                 <input type="email" name="email" id="forgot-password-input" />
-                <Image src={email} alt="Email" width={30} height={30} />
+                <Image
+                    src={email}
+                    alt="Email"
+                    width={30}
+                    height={30}
+                    priority
+                />
             </div>
             {/* Displaying a message if there is one in the form state */}
             {formState?.status == 200 ? (

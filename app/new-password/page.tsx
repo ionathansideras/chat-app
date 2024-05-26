@@ -75,6 +75,7 @@ function FormPassword() {
                             alt="Password"
                             width={30}
                             height={30}
+                            priority
                         />
                     </div>
 
@@ -92,6 +93,7 @@ function FormPassword() {
                             alt="Password"
                             width={30}
                             height={30}
+                            priority
                         />
                     </div>
                     {/* Displaying a message if there is one in the form state */}

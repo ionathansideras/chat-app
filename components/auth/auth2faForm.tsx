@@ -56,6 +56,7 @@ export default function Auth2faForm() {
                             alt="2fa-code"
                             width={30}
                             height={30}
+                            priority
                         />
                     </div>
 
