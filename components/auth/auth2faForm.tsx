@@ -46,11 +46,7 @@ export default function Auth2faForm() {
                 <form action={formAction} className="auth-form">
                     <label htmlFor="2fa-code">Your code</label>
                     <div>
-                        <input
-                            type="text"
-                            name="confirmPassword"
-                            id="2fa-code"
-                        />
+                        <input type="text" name="code" id="2fa-code" />
                         <Image
                             src={password}
                             alt="2fa-code"
