@@ -56,8 +56,11 @@ export async function POST(req: Request) {
     //  Set the date and time for the code expiration
     const expireTime = new Date();
 
+    // get username
+    const username = filteredDocs[0].username;
+
     // Create the verification HTML using the imported createVerificationHTML function
-    const html = createVerificationCodeHTML(email, code);
+    const html = createVerificationCodeHTML(username, code);
 
     try {
         // Send the verification email using the imported sendEmail function

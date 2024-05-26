@@ -39,9 +39,12 @@ export async function POST(req: Request) {
     // Generating a unique password token using the uuidv4 function
     const passwordToken = uuidv4();
 
+    // get username
+    const username = filteredDocs[0].username;
+
     // Create the verification HTML using the imported createVerificationHTML function
     const html = createPasswordResetHTML(
-        email,
+        username,
         `${API_URL}/new-password?email=${email}&token=${passwordToken}`
     );
 
