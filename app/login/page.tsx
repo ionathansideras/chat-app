@@ -78,10 +78,10 @@ export default function LoginPage() {
                     {/* The submit button for the form */}
                     <AuthSubmitButton> Log In </AuthSubmitButton>
                     {/* Links to the sign up and forgot password pages */}
-                    <div className="auth-redirect">
+                    <nav className="auth-redirect">
                         <Link href="/signup">Go to sign up</Link>
                         <Link href="/forgot-password">New password</Link>
-                    </div>
+                    </nav>
                 </form>
                 {formState?.message === "Success" ? <Auth2faForm /> : null}
                 <BackgroundElement />
