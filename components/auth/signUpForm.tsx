@@ -16,7 +16,7 @@ export default function SignUpForm() {
     // Define the initial state
     const initialState = { message: "" };
 
-    const [showPassword, setShowPassword] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
 
     // Use the useFormState hook to manage the form state
     const [formState, formAction] = useFormState(signUp, initialState);
@@ -57,7 +57,7 @@ export default function SignUpForm() {
                 <Image
                     onClick={() => setShowPassword(!showPassword)}
                     className="password-eye"
-                    src={showPassword ? eyeOpen : eyeClosed}
+                    src={showPassword ? eyeClosed : eyeOpen}
                     alt="Password"
                     width={30}
                     height={30}

@@ -41,7 +41,7 @@ function FormPassword() {
     const token = searchParams.get("token") || "";
 
     // Using the useState hook to manage the showPassword state
-    const [showPassword, setShowPassword] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
 
     // Defining the initial state for the form
     const initialState = { message: "", status: 0 };
@@ -71,7 +71,7 @@ function FormPassword() {
                         <Image
                             onClick={() => setShowPassword(!showPassword)}
                             className="password-eye"
-                            src={showPassword ? eyeOpen : eyeClosed}
+                            src={showPassword ? eyeClosed : eyeOpen}
                             alt="Password"
                             width={30}
                             height={30}

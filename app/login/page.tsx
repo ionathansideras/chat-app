@@ -29,7 +29,7 @@ export default function LoginPage() {
     // Using the useFormState hook to manage the form state
     const [formState, formAction] = useFormState(logIn, initialState);
 
-    const [showPassword, setShowPassword] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
 
     return (
         <main className="auth-container">
@@ -63,7 +63,7 @@ export default function LoginPage() {
                         <Image
                             onClick={() => setShowPassword(!showPassword)}
                             className="password-eye"
-                            src={showPassword ? eyeOpen : eyeClosed}
+                            src={showPassword ? eyeClosed : eyeOpen}
                             alt="Password"
                             width={30}
                             height={30}
