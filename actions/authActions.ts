@@ -40,15 +40,11 @@ export async function signUp(
     else if (password !== confirmPassword) {
         error = { message: "Passwords do not match" };
     }
-    // Check if password is at least 8 characters long, contains at least one uppercase letter, one lowercase letter, one number, and one special character
-    else if (
-        !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-            password
-        )
-    ) {
-        error = {
+    // Check if password is at least 8 characters long, contains at least one uppercase letter, one lowercase letter, one number, and one special character // Check if password is at least 8 characters long, contains at least one uppercase letter, one lowercase letter, and one number
+    else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
+        return {
             message:
-                "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+                "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number",
         };
     }
 
@@ -194,15 +190,11 @@ export async function createNewPassword(
         password = String(password);
     }
 
-    // Check if password is at least 8 characters long, contains at least one uppercase letter, one lowercase letter, one number, and one special character
-    if (
-        !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-            password
-        )
-    ) {
+    // Check if password is at least 8 characters long, contains at least one uppercase letter, one lowercase letter, and one number
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
         return {
             message:
-                "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+                "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number",
         };
     }
 
