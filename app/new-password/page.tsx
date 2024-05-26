@@ -52,8 +52,6 @@ function FormPassword() {
         initialState
     );
 
-    console.log(formState);
-
     return (
         <main className="auth-container">
             <section>

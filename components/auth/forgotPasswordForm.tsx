@@ -22,8 +22,6 @@ export default function ForgotPasswordForm() {
     // The forgotPassword action is passed as the first argument to useFormState
     const [formState, formAction] = useFormState(forgotPassword, initialState);
 
-    console.log(formState);
-
     return (
         // The form for requesting a password reset
         <form action={formAction} className="auth-form">
