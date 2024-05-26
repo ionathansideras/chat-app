@@ -20,22 +20,6 @@ When a user attempts to access a page, the application performs an authenticatio
 
 This process ensures that only authenticated users with a valid token can access certain pages. The `sessionToken` should be stored securely on the client side and included in every request to the server.
 
-## 🔑 Session Token Creation on Login
-
-When a user logs in, a new session token is created for them. This process works as follows:
-
-![Application Architecture](./public/session2.png)
-
-1. The user submits their login credentials. ✏️
-2. The application sends a request to the server, including the user's credentials. 📡
-3. The server validates the credentials and, if they are correct, creates a new session token. 🔐
-4. The server adds the new session token to the user's document in the database. 🗄️
-5. The server sends a response to the application, including the new session token. 📬
-6. The application receives the server's response and extracts the session token. 📤
-7. The application stores the session token in the user's session, setting it to expire after 30 days. ⏳
-
-This process ensures that each user has a unique session token that can be used to authenticate them. The session token is created on the server side, stored in the database, and sent to the client side where it is stored in the user's session.
-
 ## 📧 Email Verification
 
 This application uses Nodemailer to send a verification email to the user's email address to confirm its validity. This process works as follows:
@@ -54,3 +38,36 @@ This application uses Nodemailer to send a verification email to the user's emai
 9. If no matching document is found, the server sends a response indicating that the email could not be verified. ❌
 
 This process ensures that the user has access to the email address they provided. If a user is not verified, they cannot access certain pages in the application.
+
+## 🔑 Login
+
+The login process is handled by the `POST` function in the `route.ts` file. Here's a step-by-step overview of what happens:
+
+1. The user submits their login credentials. 📝
+2. The `POST` function receives the request and parses the request data to JSON. 📨
+3. The email and password are extracted from the parsed data. 🔍
+4. The function connects to the 'users' collection in the database. 🗄️
+5. The function checks if a user document exists in the collection that matches the provided email. 🔎
+6. If the user exists, the provided password is verified against the stored password. 🔐
+7. If the credentials are correct, a random 6-digit code is generated for two-factor authentication (2FA). 🎲
+8. The verification HTML is created using the `createVerificationCodeHTML` function. 📝
+9. An email with the 2FA code is sent to the user using the `sendEmail` function. 📧
+10. The 2FA code along with its expiration date is stored in the database. 🗄️
+11. A response is sent to the client. If all operations are successful, a 200 status with a "Success" message is returned. 📤
+
+If the status is 200, the 2FA component is opened on the client side. This component will handle the second step of the authentication process, where the user is required to enter the 2FA code that was sent to their email. 🔐
+
+## 🛡️ Two-Factor Authentication (2FA)
+
+The 2FA process is handled by the `POST` function in the `2fa_route.ts` file. Here's a step-by-step overview of what happens:
+
+1. The user submits the 2FA form with the received code. 📝
+2. The `POST` function receives the request and parses the request data to JSON. 📨
+3. The email and 2FA code are extracted from the parsed data. 🔍
+4. The function connects to the 'users' collection in the database. 🗄️
+5. The function checks if a user document exists in the collection that matches the provided email and 2FA code. 🔎
+6. If the user exists and the 2FA code is correct, the function checks if the code has not expired. ⏰
+7. If the code is valid and not expired, a session token is generated. 🎲
+8. The session token is stored in the database and sent back to the client in the response. 📤
+
+If the response is successful, the client sets the session token in the user's browser for 7 days. This session token gives the user access to the application. If the response is not successful, the user is prompted to try again. 🔐
