@@ -16,7 +16,7 @@ export default async function MessagesPage() {
     const messages = data.message.messages;
     return (
         <>
-            <h1>This page is on development</h1>
+            <h1>This page is under development</h1>
             <div>
                 {messages
                     ? messages.map((message: string) => {
